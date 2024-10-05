@@ -9,6 +9,7 @@ export class Pipeline extends Stack {
         super(scope, id, props);
 
         const pipeline = new CodePipeline(this, 'Pipeline', {
+            useChangeSets: false,
             synth: new ShellStep('Synth', {
                 input: CodePipelineSource.connection(
                     'electrototo/aws-multi-region-deployments',
@@ -24,6 +25,16 @@ export class Pipeline extends Stack {
                 ]
             })
         });
+
+        const southAmericaWave = pipeline.addWave('SouthAmerica');
+        southAmericaWave.addStage(
+            new RegionalizedApp(this, 'Sao Paolo', {
+                env: {
+                    account: this.account,
+                    region: 'sa-east-1'
+                }
+            })
+        )
 
         const northAmericaWave = pipeline.addWave('NorthAmerica');
 
