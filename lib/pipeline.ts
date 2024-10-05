@@ -28,7 +28,7 @@ export class Pipeline extends Stack {
 
         const southAmericaWave = pipeline.addWave('SouthAmerica');
         southAmericaWave.addStage(
-            new RegionalizedApp(this, 'Sao Paolo', {
+            new RegionalizedApp(this, 'SaoPaolo', {
                 env: {
                     account: this.account,
                     region: 'sa-east-1'
