@@ -30,6 +30,7 @@ export class Pipeline extends Stack {
         northAmericaWave.addStage(
             new RegionalizedApp(this, 'Oregon', {
                 env: {
+                    account: this.account,
                     region: 'us-west-2'
                 }
             })
@@ -38,6 +39,7 @@ export class Pipeline extends Stack {
         northAmericaWave.addStage(
             new RegionalizedApp(this, 'Ohio', {
                 env: {
+                    account: this.account,
                     region: 'us-east-2'
                 }
             })
