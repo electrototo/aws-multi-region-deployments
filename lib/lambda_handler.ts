@@ -7,7 +7,7 @@ export const handler = async (event: APIGatewayProxyEventV2, context: Context): 
     return {
         statusCode: 200,
         body: JSON.stringify({
-            message: 'hello world!'
+            message: `Hello from ${process.env.AWS_REGION}!`
         })
     }
 }
