@@ -1,5 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
 
@@ -12,8 +13,18 @@ export class ServerlessAPIStack extends cdk.Stack {
       handler: 'handler'
     });
 
-    new LambdaRestApi(this, 'apigw', {
+    const apiGateway = new LambdaRestApi(this, 'apigw', {
       handler: lambdaFunction
-    })
+    });
+
+    const regionalizedDomainName = `${this.region}.c.liendo.net`;
+    const acmCertificate = new Certificate(this, `${this.region}-RegionalizedACM`, {
+      domainName: regionalizedDomainName
+    });
+
+    apiGateway.addDomainName(`${this.region}-DomainName`, {
+      domainName: regionalizedDomainName,
+      certificate: acmCertificate
+    });
   }
 }
