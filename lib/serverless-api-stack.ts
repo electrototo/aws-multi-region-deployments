@@ -17,14 +17,14 @@ export class ServerlessAPIStack extends cdk.Stack {
       handler: lambdaFunction
     });
 
-    const regionalizedDomainName = `${this.region}.c.liendo.net`;
+    const globalizedDomainName = 'global.c.liendo.net';
     const acmCertificate = new Certificate(this, `${this.region}-RegionalizedACM`, {
-      domainName: regionalizedDomainName,
+      domainName: globalizedDomainName,
       validation: CertificateValidation.fromDns()
     });
 
     apiGateway.addDomainName(`${this.region}-DomainName`, {
-      domainName: regionalizedDomainName,
+      domainName: globalizedDomainName,
       certificate: acmCertificate
     });
   }
